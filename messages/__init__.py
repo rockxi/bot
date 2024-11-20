@@ -1,12 +1,11 @@
-
 import os
 from dotenv import load_dotenv, find_dotenv
-from langchain_openai import OpenAI
+from langchain_openai import ChatOpenAI
 import datab
 
 load_dotenv(find_dotenv())
-llm = OpenAI(
-    model_name="gpt-3.5-turbo",
+llm = ChatOpenAI(
+    model="gpt-3.5-turbo",
     api_key=os.getenv("OPENAI_API_KEY"),
     base_url=os.getenv("OPENAI_API_BASE"),
 )
@@ -21,7 +20,9 @@ def log(message):
 
 def to_llm(message):
     pre_msgs = datab.get_user_messages(message.chat.id)
-    pre_msgs = [{"role": "user", "content": msg[0]} for msg in pre_msgs]
+    
+    pre_msgs = [("human", msg[0]) for msg in pre_msgs]
+    pre_msgs.insert(0, ("system", "Ты филофос-помощник. Ты отвечаешь на вопросы людей по-филосовски."))
     response = llm.generate(pre_msgs).llm_output
     return response
     
