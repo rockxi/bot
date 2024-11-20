@@ -46,7 +46,7 @@ def message_count(user_id):
         try:
             user_id = int(user_id)
         except:
-            raise TypeError("user_id must be an integer")
+            return "Error: user_id must be an integer"
     conn = sqlite3.connect('messages.db')  
     cursor = conn.cursor()
     cursor.execute('SELECT COUNT(*) FROM messages WHERE user_id = ? AND role = \'user\'', (user_id,))

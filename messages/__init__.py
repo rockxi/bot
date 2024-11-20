@@ -8,6 +8,8 @@ from langchain import hub
 from langchain.agents import Tool, create_react_agent, AgentExecutor
 from langchain.prompts import *
 
+import tools
+
 load_dotenv(find_dotenv())
 llm = ChatOpenAI(
     model="gpt-3.5-turbo",
@@ -15,25 +17,16 @@ llm = ChatOpenAI(
     base_url=os.getenv("OPENAI_API_BASE"),
 )
 
-message_count_tool = Tool(
-    name="message_count",
-    func = datab.message_count,
-    description= \
-        """Инструмент для подсчёта количества сообщений пользователя.
-        Ввод: числовой идентификатор пользователя (user_id). 
-        Вывод: количество сообщений, отправленных данным пользователем."""
-)
 
-tools = [message_count_tool]
 chat_prompt = hub.pull("hwchase17/react-chat")
 
 agent = create_react_agent(
-    tools=tools,
+    tools=tools.all_tools,
     llm=llm,
     prompt=chat_prompt,
 )
 
-executor = AgentExecutor(agent = agent, tools = tools, verbose=True)
+executor = AgentExecutor(agent = agent, tools = tools.all_tools, verbose=True)
 
 def log(message):
     print(f"{message.from_user.username} {message.from_user.id}:\t {message.text}")
