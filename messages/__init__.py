@@ -22,7 +22,7 @@ def log(message):
 def to_llm(message):
     pre_msgs = datab.get_user_messages(message.chat.id)
     pre_msgs = [{"role": "user", "content": msg[0]} for msg in pre_msgs]
-    response = llm.generate(pre_msgs)
+    response = llm.generate(pre_msgs).llm_output
     return response
     
 
