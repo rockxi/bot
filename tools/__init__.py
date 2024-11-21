@@ -14,9 +14,12 @@ def matuki(message):
 
     bot.send_message(admin_id, f"{message}")
 
+def message_count(user_id):
+    return datab.message_count(user_id)
+
 message_count_tool = Tool(
     name="message_count",
-    func = datab.message_count,
+    func = message_count,
     description= \
         """Инструмент для подсчёта количества сообщений пользователя.
         срабатывает если пользователь спрашивает о количестве сообщений пользователя.
