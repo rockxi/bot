@@ -1,9 +1,8 @@
 import telebot
 import os
-from dotenv import load_dotenv, find_dotenv
 import messages
 import datab
-from pprint import pprint
+from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 datab.init_db()

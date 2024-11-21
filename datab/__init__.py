@@ -42,7 +42,6 @@ def get_user_messages(user_id):
 
 def message_count(user_id):
     if not user_id is int:
-        print(user_id, type(user_id))
         try:
             user_id = int(user_id)
         except:
